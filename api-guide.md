@@ -224,6 +224,29 @@ the answer in the room; by default only the person who ran it sees it. For a cli
 `{ "ephemeral": "Thanks!" }` shows a note to the person who clicked, and
 `{ "update": { "text": "Approved", "embeds": [] } }` replaces the card.
 
+## Connect an AI tool (Model Context Protocol)
+
+Relay has a Model Context Protocol endpoint at `/api/v1/mcp`, so an AI tool that speaks the
+protocol can list your rooms, read them, search them and post in them. Make a personal access
+token under _Settings → API tokens_ and give the tool the address and the token:
+
+```json
+{
+  "mcpServers": {
+    "relay": {
+      "url": "https://chat.example.com/api/v1/mcp",
+      "headers": { "Authorization": "Bearer rly_..." }
+    }
+  }
+}
+```
+
+The tools are `list_rooms`, `read_messages`, `search` and `post_message`. Each runs as you,
+through the same API as everything else: a token with only the `read` scope cannot post, and
+the tool sees only the rooms you can read. The endpoint answers over plain HTTP POST (the
+Streamable HTTP transport, without server-sent events) and keeps no session; browser sign-ins
+are refused there, only tokens work.
+
 ## Errors
 
 Errors always look like `{ "error": { "code": "…", "message": "…" } }` with a fitting HTTP status:

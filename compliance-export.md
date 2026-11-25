@@ -48,3 +48,34 @@ With `scope: users`, a room holds only the chosen people's messages in it.
 
 A message deleted while under legal hold is exported with the text it had when deleted.
 Attached files are listed by checksum; their contents are not part of the JSON file.
+
+## Scheduled exports
+
+Under **Administration → Exports → Scheduled exports**, an export can run by itself, daily or
+weekly, of chosen rooms, chosen people, or everything. Each run covers the time since the
+previous one, and is written either to the storage bucket (under `exports/<date>-<id>/`) or
+to a folder on an SFTP server, in one of three formats:
+
+- **JSON**: `export.json`, the format above.
+- **CSV**: `messages.csv`, one row per message (UTF-8 with a byte-order mark, so spreadsheet
+  programs read accents correctly). Encrypted messages are marked, not decrypted.
+- **EML**: one mail file per message, `<room id>-<seq>.eml`, with the author as sender, the
+  room as recipient, the time as date and thread replies linked with `In-Reply-To`.
+
+Beside the files is `manifest.json`:
+
+```json
+{
+  "format": "relay-compliance-export-manifest",
+  "version": 1,
+  "exportId": "…",
+  "createdAt": "2026-11-25T02:00:00.000Z",
+  "scope": "rooms",
+  "exportFormat": "csv",
+  "period": { "from": "2026-11-24T02:00:00.000Z", "to": "2026-11-25T02:00:00.000Z" },
+  "files": [{ "name": "messages.csv", "size": 18342, "sha256": "…" }]
+}
+```
+
+Every run is listed with the other exports, with its outcome; a run that could not reach its
+destination says why. The SFTP password is stored encrypted and never shown again.

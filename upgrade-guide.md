@@ -8,14 +8,16 @@ replace the image and restart.
 ## Before you upgrade
 
 1. Read the release notes for anything marked **Action needed**.
-2. Take a backup: `pnpm backup <folder>` (see the [admin guide](admin-guide.md#backups)).
+2. Take a backup: `docker compose run --rm backup` (see the [admin guide](admin-guide.md#backups)).
    Keep it until you are sure the new version is working.
 3. Note your current image tag, so you can go back to it.
 
 ## Docker Compose
 
-```powershell
-docker build -t relay:latest .
+In `deploy/compose/.env`, set the tag of `RELAY_IMAGE` to the new version, then:
+
+```sh
+docker compose pull
 docker compose up -d
 ```
 
@@ -24,7 +26,7 @@ version starts answering; during that time `/readyz` reports not ready, and Cadd
 
 ## Kubernetes (Helm)
 
-```powershell
+```sh
 helm upgrade relay deploy/helm/relay -f my-values.yaml --set image.tag=<new version>
 ```
 

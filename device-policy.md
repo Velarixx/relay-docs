@@ -19,6 +19,27 @@ after a second factor and through single sign-on. People who are already signed 
   confirmed after that. This needs a mail server, and accounts without an email address cannot
   confirm new devices. The device on which an account was created is trusted from the start.
 
+## The mobile apps
+
+Three more rules are carried out by Relay for Android and for iPhone and iPad:
+
+- **Opening the app needs fingerprint, face or passcode** — the app stays covered until the
+  person unlocks it with what their device offers, each time they come back to it. Without
+  this rule people can still switch the lock on for themselves.
+- **Block screenshots and screen recording** — the app's screen cannot be captured and is
+  hidden in the list of recent apps.
+- **Refuse rooted and jailbroken devices** — the app reports whether the device's own
+  protections were removed. Such a device is signed out and told why.
+
+The list **Mobile apps signed in** below the rules shows every phone and tablet with its
+owner, platform, app version and when it was last used. **Sign out** ends that app's session
+and stops its notifications.
+
+These rules run on the device and the app reports to the server. A modified app could ignore
+them or lie, so they too are a guard rail: they keep ordinary devices in line, and do not
+replace device management where that is required. Managed devices can also be given the
+server address; see the [admin guide](admin-guide.md).
+
 ## How devices are recognised
 
 Relay gives each browser or app a long-lived, HTTP-only cookie and stores only a hash of it.

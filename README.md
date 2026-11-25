@@ -47,16 +47,24 @@ Access tokens, the REST API, bots, webhooks, slash commands and interactive card
 
 ## Get Relay running in two minutes
 
-Get Relay from <https://relay.velarix.nl> and unpack it. Then, in that folder:
+You need Docker with Compose. Relay itself is pulled as an image; the `deploy` folder holds
+the files that run it.
 
 ```sh
-docker compose up --build
+git clone https://github.com/Velarixx/relay-docs.git
+cd relay-docs/deploy/compose
 ```
 
-The other guides run their commands from that same folder.
+Copy `.env.example` to `.env`, set `RELAY_DOMAIN=localhost` for a trial, and fill in
+`SECRET_KEY` and `POSTGRES_PASSWORD` with long random values. Then:
 
-Open <http://localhost:8080> and follow the setup wizard. For a real installation with HTTPS,
-continue with [Install](admin-guide.md#install) in the admin guide.
+```sh
+docker compose up -d
+```
+
+Open <https://localhost> and follow the setup wizard. Your browser warns once about the trial
+certificate, because `localhost` cannot get a public one. For a real installation with your own
+domain, continue with [Install](admin-guide.md#install) in the admin guide.
 
 ## All guides
 
@@ -71,16 +79,17 @@ continue with [Install](admin-guide.md#install) in the admin guide.
 
 ### Running Relay
 
-| Page                                                          | What you will find                                            |
-| ------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Install](admin-guide.md#install)                             | Docker Compose with automatic HTTPS, and the Helm chart       |
-| [Settings](admin-guide.md#settings-from-the-environment)      | Every environment variable and what it does                   |
-| [Health and monitoring](admin-guide.md#health-and-monitoring) | Health checks, Prometheus metrics and the Grafana dashboard   |
-| [Backups](admin-guide.md#backups)                             | Backing up and restoring the database and files               |
-| [The admin console](admin-guide.md#the-admin-console)         | People, roles, rooms, sign-in, integrations and the audit log |
-| [Extensions](admin-guide.md#extensions)                       | What extensions may do, the sandbox, and writing your own     |
-| [Sizing](admin-guide.md#sizing)                               | Measured capacity and rules of thumb                          |
-| [Upgrade guide](upgrade-guide.md)                             | Upgrading, rolling upgrades on Kubernetes, and going back     |
+| Page                                                          | What you will find                                                             |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Install](admin-guide.md#install)                             | Docker Compose with automatic HTTPS, and the Helm chart                        |
+| [Settings](admin-guide.md#settings-from-the-environment)      | Every environment variable and what it does                                    |
+| [Health and monitoring](admin-guide.md#health-and-monitoring) | Health checks, Prometheus metrics and the Grafana dashboard                    |
+| [Backups](admin-guide.md#backups)                             | Backing up and restoring the database and files                                |
+| [The admin console](admin-guide.md#the-admin-console)         | People, roles, rooms, sign-in, integrations and the audit log                  |
+| [Extensions](admin-guide.md#extensions)                       | What extensions may do, the sandbox, and the catalogue                         |
+| [Sizing](admin-guide.md#sizing)                               | Measured capacity and rules of thumb                                           |
+| [Upgrade guide](upgrade-guide.md)                             | Upgrading, rolling upgrades on Kubernetes, and going back                      |
+| [Importing data](import-format.md)                            | Bringing people and history in from CSV, Mattermost, Slack or the Relay format |
 
 ### Enterprise
 
@@ -94,13 +103,16 @@ continue with [Install](admin-guide.md#install) in the admin guide.
 
 ### Building on Relay
 
-| Page                                              | What you will find                                             |
-| ------------------------------------------------- | -------------------------------------------------------------- |
-| [API guide](api-guide.md)                         | Tokens, the REST API, bots, webhooks and commands              |
-| API reference                                     | Every route and field, served by your own Relay at `/api/docs` |
-| [Writing an extension](admin-guide.md#extensions) | The manifest, permissions and the two sample extensions        |
+| Page                                       | What you will find                                                  |
+| ------------------------------------------ | ------------------------------------------------------------------- |
+| [API guide](api-guide.md)                  | Tokens, the REST API, bots, webhooks and commands                   |
+| API reference                              | Every route and field, served by your own Relay at `/api/docs`      |
+| [Writing an extension](extension-guide.md) | Starting one, the manifest, permissions, hooks and a worked example |
 
 ## A look at Relay
+
+A channel in the middle of a working day, and the page where an admin sees what each
+extension may do.
 
 <div align="center">
 
