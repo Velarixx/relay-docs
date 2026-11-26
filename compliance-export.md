@@ -79,3 +79,9 @@ Beside the files is `manifest.json`:
 
 Every run is listed with the other exports, with its outcome; a run that could not reach its
 destination says why. The SFTP password is stored encrypted and never shown again.
+
+Relay checks the SFTP server by its host key. Enter the fingerprint as `ssh-keygen -lf` prints
+it (`SHA256:…`), or leave it empty: the first connection then records the key, and the
+schedule shows it. Every later run must meet the same key; a server with another key is sent
+nothing, and the export fails with "host key mismatch". Changing the server's address forgets
+the recorded key.

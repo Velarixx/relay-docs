@@ -37,7 +37,7 @@ analytics or avatar services, and their content security policy forbids it.
 | Live captions                                   | The speech-to-text server you enter          | Seconds of call audio at a time                                         | Leave its address empty                                   |
 | Connected workspaces (Enterprise)               | The other workspace                          | The shared rooms, signed                                                | **Administration → Connected workspaces**                 |
 | Audit stream (Enterprise)                       | Your syslog or HTTPS collector, every minute | Audit events, including IP addresses                                    | **Administration → Audit log**                            |
-| Scheduled exports (Enterprise)                  | Your SFTP server                             | Message exports                                                         | **Administration → Exports**                              |
+| Scheduled exports (Enterprise)                  | Your SFTP server, checked by its host key    | Message exports                                                         | **Administration → Exports**                              |
 
 ### Connections that are on by default
 
@@ -137,8 +137,6 @@ message could not be sent.
 
 ### Known limits
 
-- Scheduled exports do not yet check the SFTP server's host key; send them over a network you
-  trust.
 - The keys Relay uses to sign browser and mobile notifications are stored in the database
   unencrypted. They let someone send notifications as your workspace, not read anything.
 
