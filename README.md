@@ -111,8 +111,8 @@ domain, continue with [Install](admin-guide.md#install) in the admin guide.
 
 ## A look at Relay
 
-A channel in the middle of a working day, and the page where an admin sees what each
-extension may do.
+A channel in the middle of a working day, the roles and permissions an admin hands out, and
+the page where an admin sees what each extension may do.
 
 <div align="center">
 
@@ -120,6 +120,10 @@ extension may do.
   <source media="(prefers-color-scheme: dark)" srcset="images/chat-dark.png" />
   <img src="images/chat-light.png" alt="A Relay channel with messages, reactions, a code block and a thread" width="860" />
 </picture>
+
+<br /><br />
+
+<img src="images/admin-roles.png" alt="The roles and permissions matrix in the admin console" width="860" />
 
 <br /><br />
 
