@@ -38,7 +38,7 @@ and stops its notifications.
 These rules run on the device and the app reports to the server. A modified app could ignore
 them or lie, so they too are a guard rail: they keep ordinary devices in line, and do not
 replace device management where that is required. Managed devices can also be given the
-server address; see the [admin guide](admin-guide.md).
+server address; see [Apps](apps.md).
 
 ## How devices are recognised
 

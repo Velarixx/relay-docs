@@ -2,13 +2,16 @@
 
 [Documentation](README.md) › Licensing
 
-Relay Community needs no licence. Relay Enterprise features need one, which comes in two forms:
+Relay Community needs no licence key. Relay Enterprise features need one, which comes in two forms:
 
 - **A subscription** (the usual way). Customers subscribe monthly or yearly on the vendor's
   licence server, receive an activation key by email, and paste it into Relay. Relay checks
   in with the licence server every six hours.
 - **An offline key**, for servers that cannot reach the internet. The vendor issues it by
   hand; it names the customer, seats, features and an end date, and needs no check-in.
+
+Both editions are used under the [Relay Licence Agreement](licence-agreement.md); the
+[Editions](editions.md) page lists what each one includes.
 
 ## For customers
 

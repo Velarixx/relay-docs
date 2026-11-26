@@ -1,0 +1,101 @@
+# Relay Licence Agreement
+
+[Documentation](README.md) › Licence agreement
+
+Version 1.0, 25 November 2026
+
+Relay is the property of DHVK IT Consultancy, Vuurvlinder 130, Apeldoorn, the Netherlands,
+registered with the Dutch Chamber of Commerce (KvK) under number 92254500 ("we", "us").
+Copyright (c) 2026 DHVK IT Consultancy. All rights reserved.
+
+This agreement is between us and whoever installs or uses Relay ("you"). By installing or
+using Relay you accept it. If you do not accept it, do not install or use Relay.
+
+## 1. What Relay is
+
+"Relay" means the Relay software in any form we make available, including its server, web
+client, website widget, desktop and mobile apps, container images, deployment files and
+documentation, and every update of them.
+
+## 2. Community edition: free use
+
+We give you a non-exclusive, non-transferable, worldwide right, free of charge and for as
+long as this agreement lasts, to install Relay and to use it for your own organisation's
+communication, including for commercial purposes, on as many servers as you need. You may
+make the copies needed for that use and for backups.
+
+## 3. Enterprise edition: use with a licence key
+
+Some features of Relay only work with a valid licence key from us ("Enterprise features").
+You may use Enterprise features only while you hold a valid licence key for them, within
+the limits of that key (such as the number of people), and under the terms of the
+subscription or order through which you obtained it. Those terms take precedence over this
+agreement where they differ.
+
+## 4. What you may not do
+
+Unless we have agreed otherwise in writing, you may not:
+
+- **a.** sell, rent, lease, sublicense or otherwise pass Relay on to others, or distribute copies
+  of it, other than within your own organisation;
+- **b.** offer Relay to third parties as a hosted or managed service, or run it on their behalf
+  for payment;
+- **c.** change, translate, decompile, disassemble or reverse engineer Relay, or try to derive its
+  source code, except as far as the law allows this despite this restriction;
+- **d.** remove, change, bypass or disable the licence-key check, or use Enterprise features
+  without a valid licence key;
+- **e.** remove or change any copyright, trademark or other notice in Relay;
+- **f.** use Relay in breach of any law, or to build a competing product.
+
+## 5. Ownership
+
+Relay, and all intellectual property rights in it, remain ours. You receive only the rights
+to use it that this agreement and any licence key give you. We keep every right that is not
+expressly given to you.
+
+## 6. Third-party software
+
+Relay contains open-source software made by others. That software is licensed to you under
+its own licence, which this agreement does not restrict. The notices for it are included
+with Relay (in the container image at /app/THIRD-PARTY-NOTICES.txt).
+
+## 7. Your data
+
+Relay runs on systems you choose. The data you store in it is yours, and we do not receive
+it. A Relay server contacts us only for its licence key, for notices of new versions and for
+the extension catalogue, as its documentation describes.
+
+## 8. No warranty
+
+The Community edition is provided free of charge and "as is", without any warranty or
+support. As far as the law allows, we give no warranty that Relay is free of errors, fit for
+a particular purpose, or will run without interruption. Any warranty or support for the
+Enterprise edition is set out only in the terms under which you obtained its licence key.
+
+## 9. Liability
+
+As far as the law allows, we are not liable for indirect or consequential loss, including
+lost profit, lost data or business interruption. For the Community edition our total
+liability is limited to EUR 100. For the Enterprise edition it is limited to the amount you
+paid us for your licence key in the twelve months before the event that caused the loss.
+These limits do not apply to loss caused by our intent or deliberate recklessness.
+
+## 10. Ending this agreement
+
+You may end this agreement at any time by no longer using Relay and deleting your copies.
+If you breach this agreement, your rights under it end automatically, and you must stop
+using Relay and delete your copies. Sections 5, 6, 8, 9 and 12 continue to apply after the
+agreement ends.
+
+## 11. Changes
+
+We may publish a new version of this agreement. It applies to versions of Relay released
+after it is published. The version included with a release of Relay keeps applying to that
+release.
+
+## 12. Law and courts
+
+This agreement is governed by Dutch law. Disputes go to the competent court in the district
+of Gelderland, the Netherlands, unless the law requires otherwise.
+
+Questions about this agreement: info@dhvkit.nl

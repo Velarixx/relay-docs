@@ -1,6 +1,9 @@
 # Relay in production on one machine: Caddy (TLS) in front of Relay, with Postgres and Valkey.
 #   cp .env.example .env   # then fill in every value marked "change me"
 #   docker compose up -d
+# With voice and video (LiveKit, see .env.example):
+#   docker compose --profile calls up -d
+# Any other Relay setting (for example S3 storage) goes in relay.env next to this file.
 name: relay
 
 services:
@@ -13,6 +16,7 @@ services:
       - '${HTTPS_PORT:-443}:443/udp'
     environment:
       RELAY_DOMAIN: ${RELAY_DOMAIN:?set RELAY_DOMAIN in .env}
+      LIVEKIT_DOMAIN: ${LIVEKIT_DOMAIN:-}
       # Caddy gets and renews a certificate for the domain by itself (Let's Encrypt or ZeroSSL);
       # for "localhost" it uses its own local certificate authority. The config lives here so the
       # stack needs no files besides this one and .env.
@@ -28,7 +32,13 @@ services:
     command:
       - sh
       - -c
-      - printf '%s' "$$CADDYFILE" > /config/Caddyfile && exec caddy run --adapter caddyfile --config /config/Caddyfile
+      - |
+        printf '%s' "$$CADDYFILE" > /config/Caddyfile
+        # With calls on, LiveKit's signalling gets a name and a certificate of its own.
+        if [ -n "$$LIVEKIT_DOMAIN" ]; then
+          printf '\n%s {\n  reverse_proxy livekit:7880\n}\n' "$$LIVEKIT_DOMAIN" >> /config/Caddyfile
+        fi
+        exec caddy run --adapter caddyfile --config /config/Caddyfile
     volumes:
       - caddy-data:/data
       - caddy-config:/config
@@ -45,6 +55,10 @@ services:
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
+    # Every other Relay setting (see "Settings from the environment" in the guides), one per line.
+    env_file:
+      - path: ./relay.env
+        required: false
     environment:
       NODE_ENV: production
       PUBLIC_URL: https://${RELAY_DOMAIN}
@@ -55,6 +69,7 @@ services:
       MAIL_FROM: ${MAIL_FROM:-}
       METRICS_TOKEN: ${METRICS_TOKEN:-}
       LIVEKIT_URL: ${LIVEKIT_URL:-}
+      LIVEKIT_API_URL: ${LIVEKIT_API_URL:-}
       LICENSE_SERVER_URL: ${LICENSE_SERVER_URL:-}
       PUSH_GATEWAY_URL: ${PUSH_GATEWAY_URL:-}
       LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-}
@@ -95,7 +110,28 @@ services:
       timeout: 3s
       retries: 20
 
-  # Tools that run only when asked for (see the admin guide, "Backups"):
+  # Voice and video, with `--profile calls`. Browsers reach it at LIVEKIT_DOMAIN through Caddy
+  # for signalling, and directly on ports 7881 (TCP) and 7882 (UDP) for sound and picture.
+  livekit:
+    image: livekit/livekit-server:v1.9.1
+    profiles: [calls]
+    restart: unless-stopped
+    environment:
+      LIVEKIT_CONFIG: |
+        port: 7880
+        rtc:
+          tcp_port: ${LIVEKIT_TCP_PORT:-7881}
+          udp_port: ${LIVEKIT_UDP_PORT:-7882}
+          use_external_ip: true
+        keys:
+          ${LIVEKIT_API_KEY:-relay}: ${LIVEKIT_API_SECRET:-}
+        logging:
+          level: info
+    ports:
+      - '${LIVEKIT_TCP_PORT:-7881}:${LIVEKIT_TCP_PORT:-7881}'
+      - '${LIVEKIT_UDP_PORT:-7882}:${LIVEKIT_UDP_PORT:-7882}/udp'
+
+  # Tools that run only when asked for (see "Backups" in the guides):
   #   docker compose run --rm backup             writes a new folder under ./backups
   #   docker compose run --rm restore <folder>   puts that backup back
   backup:
@@ -142,7 +178,11 @@ services:
         name=$${1:?give the name of a folder under backups}
         from=/backups/$$name
         if [ ! -f "$$from/manifest.json" ]; then echo "no backup at backups/$$name"; exit 1; fi
-        pg_restore --host=postgres --username=relay --dbname=relay --clean --if-exists \
+        # Into an empty database: nothing a later version added survives, so going back to the
+        # version that made the backup works.
+        psql --host=postgres --username=relay --dbname=postgres -v ON_ERROR_STOP=1 --quiet \
+          -c 'DROP DATABASE IF EXISTS relay WITH (FORCE)' -c 'CREATE DATABASE relay OWNER relay'
+        pg_restore --host=postgres --username=relay --dbname=relay \
           --no-owner --no-privileges --exit-on-error "$$from/database.dump"
         mkdir -p /relay/files
         find /relay/files -mindepth 1 -delete

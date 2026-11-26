@@ -10,7 +10,7 @@ messages, calls, and the chat window customers use on your website.
 - **Sign in** with the username or email and password you chose, or with your organisation's
   single sign-on button. If your admin requires it, you also set up two-factor sign-in with an
   authenticator app, email codes or recovery codes.
-- **Your profile** (account menu → Settings): name, picture, language (English or Nederlands),
+- **Your profile** (account menu → Settings): name, picture, language (English, Nederlands, Deutsch, Français or Español),
   light or dark theme, and notification preferences.
 - **Your status**: set a short status with an emoji, and choose automatic, away, busy or
   appear offline. Relay marks you away by itself when you are idle.
